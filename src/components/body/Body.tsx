@@ -29,9 +29,9 @@ class Body extends Component<object, State> {
   componentDidMount() {
     const savedQuery = localStorage.getItem('savedSearchQuery');
     if (savedQuery) {
-      this.getSearch(savedQuery); // Если есть сохраненный запрос, используем его
+      this.getSearch(savedQuery);
     } else {
-      this.getSearch(''); // Иначе, используем пустой запрос
+      this.getSearch('');
     }
   }
 

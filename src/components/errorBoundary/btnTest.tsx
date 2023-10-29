@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './btnTest.css';
 
 interface State {
   hasError: boolean;
@@ -21,8 +22,10 @@ class ErrorButton extends Component<object, State> {
       throw new Error('I crashed!');
     }
     return (
-      <div>
-        <button onClick={this.handleButtonClick}>ERROR</button>
+      <div className="error__test">
+        <button onClick={this.handleButtonClick} className="error__btn">
+          ERROR
+        </button>
       </div>
     );
   }
