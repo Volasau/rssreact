@@ -6,7 +6,7 @@ class Header extends Component {
   render(): React.ReactNode {
     return (
       <div className="header">
-        <img src="../../../public/logo.png"></img>
+        <img src="../../../public/logo.png" className="header__logo"></img>
         <Search />
       </div>
     );
