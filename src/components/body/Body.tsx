@@ -45,7 +45,6 @@ class Body extends Component<object, State> {
           data: data,
           noResults: data.length === 0,
         });
-        console.log(data);
       })
       .catch((error) => {
         this.setState({ isLoading: false });
