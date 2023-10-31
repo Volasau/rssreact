@@ -1,0 +1,27 @@
+.body__container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.body__loader {
+  margin-top: 50px;
+  animation: rotate 1s infinite linear;
+}
+
+.body__no-results {
+  font-size: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  letter-spacing: 1.5px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
