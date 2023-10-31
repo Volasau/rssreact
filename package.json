@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "format:fix": "prettier --write .",
     "precommit": "lint-staged",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
