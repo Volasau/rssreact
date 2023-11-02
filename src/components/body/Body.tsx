@@ -3,23 +3,29 @@ import './body.css';
 import Card, { CardProps } from '../card/Card';
 import Loader from '../loader/Loader';
 import getPlanets from '../../Api/fetch';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Body() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [ispage, setIsPage] = useState(1);
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('savedSearchQuery');
+    const urlParams = new URLSearchParams(location.search);
+    const pageParam = parseInt(urlParams.get('page') || '1');
+
     if (savedQuery) {
-      getSearch(savedQuery, page);
+      getSearch(savedQuery, pageParam);
     } else {
-      getSearch('', page);
+      getSearch('', pageParam);
     }
-  }, [page]);
+  }, [location.search]);
 
   function getSearch(searchQuery: string, page: number): void {
     setIsLoading(true);
@@ -29,15 +35,9 @@ function Body() {
       .then((data) => {
         setIsLoading(false);
         setData(data.results);
-        setIsPage(page);
-        setData(
-          data.results.map((result: CardProps) => ({
-            ...result,
-            url: `${result.url}`,
-          }))
-        );
-        setNoResults(data.results.length === 0);
+        setPage(page);
         setTotalPages(Math.ceil(data.count / data.results.length));
+        setNoResults(data.results.length === 0);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -46,14 +46,16 @@ function Body() {
   }
 
   const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
+    const newPage = page + 1;
+    if (newPage <= totalPages) {
+      navigate(`?page=${newPage}`);
     }
   };
 
   const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
+    const newPage = page - 1;
+    if (newPage >= 1) {
+      navigate(`?page=${newPage}`);
     }
   };
 
@@ -92,7 +94,7 @@ function Body() {
           >
             Prev
           </button>
-          <div className="btn__page">{ispage}</div>
+          <div className="btn__page">{page}</div>
           <button
             onClick={handleNextPage}
             disabled={page === totalPages}
