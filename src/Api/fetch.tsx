@@ -1,17 +1,17 @@
-async function getPlanets(searchQuery: string | null) {
-  let url = 'https://swapi.dev/api/planets';
+async function getPlanets(searchQuery: string | null, page: number) {
+  let url = `https://swapi.dev/api/planets/?page=${page}`;
 
   if (searchQuery) {
-    url = `https://swapi.dev/api/planets/?search=${searchQuery}`;
+    url += `&search=${searchQuery}`;
   }
 
   const response = await fetch(url);
   const data = await response.json();
 
   if (data.results) {
-    return data.results;
+    return data;
   } else {
-    throw new Error('Not data "results"');
+    throw new Error('No "results" in data');
   }
 }
 

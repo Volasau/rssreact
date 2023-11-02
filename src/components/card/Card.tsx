@@ -5,11 +5,16 @@ export interface CardProps {
   climate: string;
   terrain: string;
   population: string;
+  url: string;
 }
 
 const Card = (props: CardProps) => {
+  const handleCardClick = () => {
+    console.log(props.url);
+  };
+
   return (
-    <div className="card__container">
+    <div className="card__container" onClick={handleCardClick}>
       <div className="card__title text">
         🌌
         <span className="card__span-title">{props.name}</span>
