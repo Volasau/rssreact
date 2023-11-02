@@ -1,60 +1,41 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './body.css';
-import Card from '../card/Card';
-import ApiService from '../../Api/fetch';
+import Card, { CardProps } from '../card/Card';
 import Loader from '../loader/Loader';
+import getPlanets from '../../Api/fetch';
 
-interface State {
-  data: Array<{
-    name: string;
-    climate: string;
-    terrain: string;
-    population: string;
-  }>;
-  isLoading: boolean;
-  noResults: boolean;
-}
+function Body() {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
-class Body extends Component<object, State> {
-  constructor(props: object | Readonly<object>) {
-    super(props);
-
-    this.state = {
-      data: [],
-      isLoading: false,
-      noResults: false,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const savedQuery = localStorage.getItem('savedSearchQuery');
     if (savedQuery) {
-      this.getSearch(savedQuery);
+      getSearch(savedQuery);
     } else {
-      this.getSearch('');
+      getSearch('');
     }
-  }
+  }, []);
 
-  getSearch = (searchQuery: string) => {
-    this.setState({ isLoading: true, noResults: false });
+  function getSearch(searchQuery: string): void {
+    setIsLoading(true);
+    setNoResults(false);
 
-    ApiService.getPlanets(searchQuery)
+    getPlanets(searchQuery)
       .then((data) => {
-        this.setState({
-          isLoading: false,
-          data: data,
-          noResults: data.length === 0,
-        });
+        setIsLoading(false);
+        setData(data);
+        setNoResults(data.length === 0);
       })
       .catch((error) => {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
         console.error('Error data:', error);
       });
-  };
+  }
 
-  render(): React.ReactNode {
-    const { isLoading, noResults } = this.state;
-    return (
+  return (
+    <div className="wrapper">
       <div className="body__container">
         {isLoading ? (
           <div className="body__loader">
@@ -63,29 +44,19 @@ class Body extends Component<object, State> {
         ) : noResults ? (
           <div className="body__no-results">Nothing found</div>
         ) : (
-          this.state.data.map(
-            (
-              item: {
-                name: string;
-                climate: string;
-                terrain: string;
-                population: string;
-              },
-              index: React.Key | null | undefined
-            ) => (
-              <Card
-                key={index}
-                name={item.name}
-                climate={item.climate}
-                terrain={item.terrain}
-                population={item.population}
-              />
-            )
-          )
+          data.map((item: CardProps, index: React.Key | null | undefined) => (
+            <Card
+              key={index}
+              name={item.name}
+              climate={item.climate}
+              terrain={item.terrain}
+              population={item.population}
+            />
+          ))
         )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Body;
