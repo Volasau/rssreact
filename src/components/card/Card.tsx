@@ -9,9 +9,7 @@ export interface CardProps {
 }
 
 const Card = (props: CardProps) => {
-  const handleCardClick = () => {
-    console.log(props.url);
-  };
+  const handleCardClick = () => {};
 
   return (
     <div className="card__container" onClick={handleCardClick}>
