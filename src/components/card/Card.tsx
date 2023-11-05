@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './card.css';
-import Modal from '../modal/modal';
+import Modal from '../modal/Modal';
 
 export interface CardProps {
   name: string;
