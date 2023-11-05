@@ -1,0 +1,70 @@
+.body__container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.body__loader {
+  margin-top: 50px;
+  animation: rotate 1s infinite linear;
+}
+
+.body__no-results {
+  font-size: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  letter-spacing: 1.5px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn__pagination {
+  display: flex;
+  padding: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.btn__pagin {
+  width: 40px;
+  height: 25px;
+  border-radius: 6px;
+  background: rgb(46, 132, 231);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  transition: color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn__pagin:hover {
+  background-color: blue;
+}
+
+.btn__page {
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.btn__pagin:disabled {
+  background-color: gray;
+}
