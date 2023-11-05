@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import './body.css';
 import Card, { CardProps } from '../card/Card';
 import Loader from '../loader/Loader';
-import getPlanets from '../../Api/fetch';
+import getPlanets, { getAllPlanets } from '../../Api/fetch';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Select from '../select/Select';
 
 function Body() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CardProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedLimit, setSelectedLimit] = useState(10);
 
   useEffect(() => {
     const savedQuery = localStorage.getItem('savedSearchQuery');
@@ -21,28 +23,53 @@ function Body() {
     const pageParam = parseInt(urlParams.get('page') || '1');
 
     if (savedQuery) {
-      getSearch(savedQuery, pageParam);
+      getSearch(savedQuery, pageParam, selectedLimit);
     } else {
-      getSearch('', pageParam);
+      getSearch('', pageParam, selectedLimit);
     }
-  }, [location.search]);
+  }, [location.search, selectedLimit]);
 
-  function getSearch(searchQuery: string, page: number): void {
+  function getSearch(
+    searchQuery: string,
+    page: number,
+    selectedLimit: number
+  ): void {
     setIsLoading(true);
     setNoResults(false);
 
-    getPlanets(searchQuery, page)
-      .then((data) => {
-        setIsLoading(false);
-        setData(data.results);
-        setPage(page);
-        setTotalPages(Math.ceil(data.count / data.results.length));
-        setNoResults(data.results.length === 0);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.error('Error data:', error);
-      });
+    if (selectedLimit === 10) {
+      getPlanets(searchQuery, page)
+        .then((data) => {
+          setIsLoading(false);
+          setData(data.results);
+          setPage(page);
+          setTotalPages(Math.ceil(data.count / data.results.length));
+          setNoResults(data.results.length === 0);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error('Error data:', error);
+        });
+    }
+    if (selectedLimit === 60) {
+      getAllPlanets(searchQuery)
+        .then((data) => {
+          const cardData: CardProps[] = data.map((planet) => ({
+            name: planet.name,
+            climate: planet.climate,
+            terrain: planet.terrain,
+            population: planet.population,
+            url: planet.url,
+          }));
+          setIsLoading(false);
+          setData(cardData);
+          setNoResults(cardData.length === 0);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.error('Error data:', error);
+        });
+    }
   }
 
   const handleNextPage = () => {
@@ -57,6 +84,10 @@ function Body() {
     if (newPage >= 1) {
       navigate(`?page=${newPage}`);
     }
+  };
+  const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLimit = parseInt(event.target.value);
+    setSelectedLimit(newLimit);
   };
 
   return (
@@ -89,21 +120,25 @@ function Body() {
         <div className="btn__pagination">
           <button
             onClick={handlePreviousPage}
-            disabled={page === 1}
+            disabled={page === 1 || selectedLimit === 60}
             className="btn__pagin"
           >
             Prev
           </button>
-          <div className="btn__page">{page}</div>
+          <div className="btn__page">{selectedLimit === 60 ? 1 : page}</div>
           <button
             onClick={handleNextPage}
-            disabled={page === totalPages}
+            disabled={page === totalPages || selectedLimit === 60}
             className="btn__pagin"
           >
             Next
           </button>
         </div>
       </div>
+      <Select
+        selectedLimit={selectedLimit}
+        handleLimitChange={handleLimitChange}
+      />
     </div>
   );
 }
