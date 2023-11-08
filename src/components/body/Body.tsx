@@ -96,9 +96,7 @@ function Body() {
     <div className="wrapper">
       <div className="body__container">
         {isLoading ? (
-          <div className="body__loader">
-            <Loader />
-          </div>
+          <Loader />
         ) : noResults ? (
           <div className="body__no-results">Nothing found</div>
         ) : (

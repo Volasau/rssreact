@@ -47,3 +47,16 @@ export async function getAllPlanets(searchQuery: string | null) {
   }
   return allPlanets;
 }
+
+export async function getPlanet(id: number) {
+  const url = `https://swapi.dev/api/planets/${id}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (data) {
+    return data;
+  } else {
+    throw new Error('No "results" in data');
+  }
+}

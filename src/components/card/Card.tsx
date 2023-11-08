@@ -13,9 +13,17 @@ export interface CardProps {
 const Card: React.FC<CardProps> = (props: CardProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleCardClick = () => {
+  const handleCardClick = async () => {
     setIsModalVisible(true);
   };
+
+  function extractNumberFromUrl(url: string) {
+    const matches = url.match(/(\d+)\/$/);
+    if (matches && matches.length > 1) {
+      return parseInt(matches[1], 10);
+    }
+    return null;
+  }
 
   return (
     <>
@@ -39,7 +47,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <Modal
         active={isModalVisible}
         setActive={setIsModalVisible}
-        cardData={props}
+        id={extractNumberFromUrl(props.url)}
       />
     </>
   );

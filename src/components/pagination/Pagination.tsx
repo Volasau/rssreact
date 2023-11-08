@@ -5,6 +5,7 @@ interface PaginationProps {
   handleNextPage: () => void;
   selectedLimit: number;
 }
+
 function Pagination({
   page,
   totalPages,
