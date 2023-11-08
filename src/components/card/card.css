@@ -30,3 +30,15 @@
   letter-spacing: 1px;
   text-align: center;
 }
+
+.card__container:hover {
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 15px 5px rgb(0, 0, 0, 0.6);
+
+}
+
+.card__container:hover .card__span-title {
+  font-size: 30px;
+  transition: all 0.3s;
+}
