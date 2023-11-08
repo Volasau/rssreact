@@ -5,6 +5,7 @@ import Loader from '../loader/Loader';
 import getPlanets, { getAllPlanets } from '../../Api/fetch';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Select from '../select/Select';
+import Pagination from '../pagination/Pagination';
 
 function Body() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ function Body() {
       navigate(`?page=${newPage}`);
     }
   };
+
   const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(event.target.value);
     setSelectedLimit(newLimit);
@@ -116,25 +118,13 @@ function Body() {
           </>
         )}
       </div>
-      <div className="pagination">
-        <div className="btn__pagination">
-          <button
-            onClick={handlePreviousPage}
-            disabled={page === 1 || selectedLimit === 60}
-            className="btn__pagin"
-          >
-            Prev
-          </button>
-          <div className="btn__page">{selectedLimit === 60 ? 1 : page}</div>
-          <button
-            onClick={handleNextPage}
-            disabled={page === totalPages || selectedLimit === 60}
-            className="btn__pagin"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        handlePreviousPage={handlePreviousPage}
+        handleNextPage={handleNextPage}
+        selectedLimit={selectedLimit}
+      />
       <Select
         selectedLimit={selectedLimit}
         handleLimitChange={handleLimitChange}
