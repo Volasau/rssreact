@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './body.css';
-import Card, { CardProps } from '../card/Card';
-import Loader from '../loader/Loader';
+import { CardProps } from '../card/Card';
 import getPlanets, { getAllPlanets } from '../../Api/fetch';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Select from '../select/Select';
 import Pagination from '../pagination/Pagination';
+import CardList from '../cardList/CardList';
 
 function Body() {
   const navigate = useNavigate();
@@ -94,28 +94,7 @@ function Body() {
 
   return (
     <div className="wrapper">
-      <div className="body__container">
-        {isLoading ? (
-          <Loader />
-        ) : noResults ? (
-          <div className="body__no-results">Nothing found</div>
-        ) : (
-          <>
-            {data.map(
-              (item: CardProps, index: React.Key | null | undefined) => (
-                <Card
-                  key={index}
-                  name={item.name}
-                  climate={item.climate}
-                  terrain={item.terrain}
-                  population={item.population}
-                  url={item.url}
-                />
-              )
-            )}
-          </>
-        )}
-      </div>
+      <CardList isLoading={isLoading} noResults={noResults} data={data} />
       <Pagination
         page={page}
         totalPages={totalPages}
