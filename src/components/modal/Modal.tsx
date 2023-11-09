@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 interface ModalProps {
   active: boolean;
   setActive: (active: boolean) => void;
-  id: number | null;
+  url: string | null;
 }
 
 export interface PlanetData {
@@ -21,25 +21,23 @@ export interface PlanetData {
   url: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({ active, setActive, id }) => {
+export const Modal: React.FC<ModalProps> = ({ active, setActive, url }) => {
   const [data, setData] = useState<PlanetData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (id !== null && active) {
+    if (url !== null && active) {
       setIsLoading(true);
-      getPlanet(id)
+      getPlanet(url)
         .then((result) => {
           setData(result);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
     }
-  }, [id, active]);
+  }, [url, active]);
 
   return (
     <div

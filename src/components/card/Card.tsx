@@ -17,14 +17,6 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
     setIsModalVisible(true);
   };
 
-  function extractNumberFromUrl(url: string) {
-    const matches = url.match(/(\d+)\/$/);
-    if (matches && matches.length > 1) {
-      return parseInt(matches[1], 10);
-    }
-    return null;
-  }
-
   return (
     <>
       <div className="card__container" onClick={handleCardClick}>
@@ -47,7 +39,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <Modal
         active={isModalVisible}
         setActive={setIsModalVisible}
-        id={extractNumberFromUrl(props.url)}
+        url={props.url}
       />
     </>
   );
