@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { getPlanet } from '../../Api/fetch';
+import Loader from '../loader/Loader';
 import './card.css';
-import Modal from '../modal/Modal';
+import Modal, { ModalProps } from '../modal/Modal';
 
 export interface CardProps {
   name: string;
@@ -12,9 +14,20 @@ export interface CardProps {
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalData, setModalData] = useState<ModalProps['data'] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCardClick = async () => {
-    setIsModalVisible(true);
+    setIsLoading(true);
+    try {
+      const result = await getPlanet(props.url);
+      setModalData(result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsModalVisible(true);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -22,13 +35,14 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <div className="card__container" onClick={handleCardClick}>
         <div className="card__title text">
           🌌
-          <span className="card__span-title">{props.name}</span>
+          <span className="card__span-title card__name">{props.name}</span>
         </div>
         <div className="card__climate text">
-          <span className="card__span">climate: </span> {props.climate}
+          <span className="card__span card__climate">climate: </span>{' '}
+          {props.climate}
         </div>
         <div className="card__terrain text">
-          <span className="card__span">terrain: </span>
+          <span className="card__span card__terrain">terrain: </span>
           {props.terrain}
         </div>
         <div className="card__population text">
@@ -36,11 +50,15 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           {props.population}
         </div>
       </div>
-      <Modal
-        active={isModalVisible}
-        setActive={setIsModalVisible}
-        url={props.url}
-      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Modal
+          active={isModalVisible}
+          setActive={setIsModalVisible}
+          data={modalData}
+        />
+      )}
     </>
   );
 };
