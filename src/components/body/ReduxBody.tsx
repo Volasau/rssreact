@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './body.css';
 import Select from '../select/Select';
 import ReduxCardList from '../cardList/reduxcardlist';
-import ReduxLoader from '../../components/loader/ReduxLoader';
 import { useGetOneQuery } from '../../Api/reduxApi';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { RootState } from '../../redux/store';
@@ -26,12 +25,7 @@ function ReduxBody() {
   console.log(data);
 
   if (isLoading) {
-    return (
-      <div className="body-redux__lodaer">
-        Redux loading...
-        <ReduxLoader />
-      </div>
-    );
+    return <div className="body-redux__lodaer">Redux loading...</div>;
   }
   if (isError) {
     return <p>Error fetching data</p>;
