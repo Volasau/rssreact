@@ -12,16 +12,7 @@ import { useGetOneQuery } from './Api/reduxApi';
 import ReduxBody from './components/body/ReduxBody';
 
 function App() {
-  // const [planetData, setPlanetData] = useState<CardProps[]>(
-  //   planetContextState.planetData
-  // );
-
-  const {
-    data = [],
-    isError,
-    isLoading,
-  } = useGetOneQuery({ searchQuery: '', page: 2 });
-  console.log(data);
+  const { isError, isLoading } = useGetOneQuery({ searchQuery: '', page: 2 });
 
   if (isLoading) {
     return <div className="body-redux__lodaer">Redux loading...</div>;

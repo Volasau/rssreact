@@ -6,8 +6,6 @@ interface ReduxCardListProps {
 }
 
 function ReduxCardList({ planetValue }: ReduxCardListProps) {
-  console.log('Received planetValue:', planetValue);
-
   return (
     <div className="body__container">
       <>

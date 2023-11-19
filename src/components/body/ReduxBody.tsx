@@ -3,15 +3,10 @@ import './body.css';
 import Select from '../select/Select';
 import ReduxCardList from '../cardList/reduxcardlist';
 import { useGetOneQuery } from '../../Api/reduxApi';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { RootState } from '../../redux/store';
 
 function ReduxBody() {
   const [selectedLimit, setSelectedLimit] = useState(10);
-  const searchQuery = useSelector(
-    (state: RootState) => state.planet.searchQuery
-  );
-  console.log(searchQuery);
+
   const savedQuery = localStorage.getItem('savedSearchQuery');
 
   const {
@@ -22,7 +17,6 @@ function ReduxBody() {
     searchQuery: savedQuery,
     page: 1,
   });
-  console.log(data);
 
   if (isLoading) {
     return <div className="body-redux__lodaer">Redux loading...</div>;
