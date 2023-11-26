@@ -20,7 +20,10 @@ export const getStaticProps = async () => {
 export default function Page({ products }) {
   return (
     <>
-      <h1>Прошу прощения за столь унылое решение данного таска</h1>
+      <h1>
+        Извините за не полную работу ЭТО все что смог сделать с новой API за
+        день
+      </h1>
       <Search placeholder="Search invoices..." />
       <Products products={products} />
     </>
