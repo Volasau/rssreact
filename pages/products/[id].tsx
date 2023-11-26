@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoProduct from './InfoProduct';
+import InfoProduct, { product } from './InfoProduct';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (context) => {
@@ -18,8 +18,7 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-function OneProduct(product) {
-  console.log(product);
+function OneProduct(product: product) {
   const router = useRouter();
 
   const handleCloseClick = () => {

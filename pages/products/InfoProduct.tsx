@@ -10,11 +10,12 @@ export interface product {
   images: string;
 }
 
-function InfoProduct({ product }) {
-  console.log(product);
+function InfoProduct({ product: product }) {
   if (!product) {
     return <h1>Empty product</h1>;
   }
+
+  const blurDataURL = `data:image/png;base64,${product.product.images[0]}`;
 
   return (
     <>
@@ -37,6 +38,8 @@ function InfoProduct({ product }) {
         alt="Picture"
         width={400}
         height={400}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
         priority
       />
     </>
