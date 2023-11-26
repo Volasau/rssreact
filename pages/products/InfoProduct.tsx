@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
+import Loading from '../../components/loading';
 
 export interface product {
   id: number;
@@ -11,9 +12,13 @@ export interface product {
 }
 
 function InfoProduct({ product: product }) {
+  const [isLoading, setIsLoading] = useState(false);
   if (!product) {
     return <h1>Empty product</h1>;
   }
+  const handleImageLoad = () => {
+    setIsLoading(true);
+  };
 
   const blurDataURL = `data:image/png;base64,${product.product.images[0]}`;
 
@@ -32,8 +37,9 @@ function InfoProduct({ product: product }) {
         <strong>description: </strong>
         {product.product.description}
       </div>
+      {!isLoading && <Loading />}
       <Image
-        className="info__image"
+        className={`info__image ${!isLoading ? 'hidden' : ''}`}
         src={product.product.images[0]}
         alt="Picture"
         width={400}
@@ -41,6 +47,7 @@ function InfoProduct({ product: product }) {
         placeholder="blur"
         blurDataURL={blurDataURL}
         priority
+        onLoad={handleImageLoad}
       />
     </>
   );
