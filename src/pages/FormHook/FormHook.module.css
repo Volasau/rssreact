@@ -1,0 +1,11 @@
+.title {
+  display: flex;
+  justify-content: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 30px;
+  color: rgb(38, 41, 225);
+}
+
+.text {
+  text-align: center;
+}
