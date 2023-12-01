@@ -6,14 +6,18 @@ function Header() {
     <>
       <nav className={style.container}>
         <ul className={style.navigation}>
-          <li>
+          {/* <li>
             <Link to="/">Home</Link>
+          </li> */}
+          <li>
+            <Link className={style.title} to="/formun">
+              Uncontrolled
+            </Link>
           </li>
           <li>
-            <Link to="/formun">Uncontrolled</Link>
-          </li>
-          <li>
-            <Link to="/formhook">Controlled</Link>
+            <Link className={style.title} to="/formhook">
+              Controlled
+            </Link>
           </li>
         </ul>
       </nav>
