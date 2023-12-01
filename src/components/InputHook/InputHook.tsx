@@ -23,7 +23,7 @@ const schema = yup
       .required('Password is required')
       .matches(
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])/,
-        'Password must contain at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character'
+        'must contain min 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character'
       ),
     confirmPassword: yup
       .string()
