@@ -6,7 +6,7 @@ function FormUN() {
     <>
       <div className={style.container}>
         <div className={style.title}>
-          <h3 className={style.text}>FormUN</h3>
+          <h3 className={style.text}>Uncontrolled</h3>
         </div>
         <LinkToHome />
       </div>

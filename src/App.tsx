@@ -3,6 +3,7 @@ import Home from './pages/Home/Home';
 import Error from './pages/Error/Error';
 import FormHook from './pages/FormHook/FormHook';
 import FormUN from './pages/FormUn/FormUn';
+import './App.css';
 
 function App() {
   return (

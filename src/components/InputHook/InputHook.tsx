@@ -12,10 +12,11 @@ const schema = yup
       .string()
       .required('Name is required')
       .matches(/^[A-Z]/, 'Should start with a capital letter'),
-    age: yup.number().positive().integer().required(),
+    age: yup.number().positive().integer().required('Age is required'),
     email: yup
       .string()
       .email('Invalid email format')
+      .matches(/^.+@.+\..+$/, 'Invalid email format')
       .required('Email is required'),
     password: yup
       .string()
@@ -37,13 +38,13 @@ const schema = yup
       .mixed()
       .test(
         'fileType',
-        'Only PNG and JPEG file types are allowed',
+        'File not selected or not in PNG JPG format',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (files: any) => {
           if (!files || !files.length) return false;
 
           const file = files[0];
-          const allowedExtensions = ['png', 'jpeg'];
+          const allowedExtensions = ['png', 'jpg'];
           const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
           return fileExtension && allowedExtensions.includes(fileExtension);
@@ -51,10 +52,10 @@ const schema = yup
       )
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .test('fileSize', 'File size exceeds 5MB limit', (files: any) => {
-        if (!files || !files.length) return false;
+        if (!files || !files.length) return true;
 
         const file = files[0];
-        const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+        const maxSizeInBytes = 5 * 1024 * 1024;
         return file.size <= maxSizeInBytes;
       })
       .required('Picture is required'),
@@ -70,69 +71,123 @@ function InputHook() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    mode: 'all',
   });
   const onSubmit = (data: FormData) => {
     console.log(data);
-    // Перенаправление на главную страницу
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Name</label>
-      <input {...register('firstName')} />
-      <p className={style.error}>{errors.firstName?.message}</p>
+    <div className={style.container}>
+      <form className={style.form__hook} onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="name">Name</label>
+        <br />
+        <input
+          className={style.input__fild}
+          id="name"
+          {...register('firstName')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.firstName?.message}</p>
+        </div>
 
-      <label htmlFor="age">Age</label>
-      <input id="age" {...register('age')} />
-      <p className={style.error}>{errors.age?.message}</p>
+        <label htmlFor="age">Age</label>
+        <br />
+        <input
+          className={style.input__fild}
+          id="age"
+          maxLength={3}
+          {...register('age')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.age?.message}</p>
+        </div>
 
-      <label>Email</label>
-      <input {...register('email')} />
-      <p className={style.error}>{errors.email?.message}</p>
+        <label htmlFor="email">Email</label>
+        <br />
+        <input
+          className={style.input__fild}
+          id="email"
+          {...register('email')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.email?.message}</p>
+        </div>
 
-      <label>Password</label>
-      <input {...register('password')} />
-      <p className={style.error}>{errors.password?.message}</p>
+        <label htmlFor="pass">Password</label>
+        <br />
+        <input
+          className={style.input__fild}
+          id="pass"
+          type="password"
+          {...register('password')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.password?.message}</p>
+        </div>
 
-      <label>Confirm Password</label>
-      <input {...register('confirmPassword')} />
-      <p className={style.error}>{errors.confirmPassword?.message}</p>
+        <label htmlFor="conpass">Confirm Password</label>
+        <br />
+        <input
+          className={style.input__fild}
+          id="conpass"
+          type="password"
+          {...register('confirmPassword')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.confirmPassword?.message}</p>
+        </div>
 
-      <label>Gender</label>
-      <select {...register('gender')}>
-        <option value="">Select Gender</option>
-        <option value="male">male</option>
-        <option value="female">female</option>
-      </select>
-      <p className={style.error}>{errors.gender?.message}</p>
+        <label htmlFor="gender">Gender</label>
+        <br />
+        <select id="gender" {...register('gender')}>
+          <option value="">Select Gender</option>
+          <option value="male">male</option>
+          <option value="female">female</option>
+        </select>
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.gender?.message}</p>
+        </div>
 
-      <label>Country</label>
-      <select {...register('country')}>
-        <option value="">Select Country</option>
-        {countries.map((country, index) => (
-          <option key={index} value={country.Country}>
-            {country.Country}
-          </option>
-        ))}
-      </select>
-      <p className={style.error}>{errors.country?.message}</p>
+        <label htmlFor="country">Country</label>
+        <br />
+        <select id="country" {...register('country')}>
+          <option value="">Select Country</option>
+          {countries.map((country, index) => (
+            <option key={index} value={country.Country}>
+              {country.Country}
+            </option>
+          ))}
+        </select>
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.country?.message}</p>
+        </div>
 
-      <label htmlFor="picture">Upload Picture</label>
-      <input
-        id="picture"
-        type="file"
-        accept=".png, .jpeg"
-        {...register('picture')}
-      />
-      <p className={style.error}>{errors.picture?.message}</p>
+        <label htmlFor="picture">Upload Picture</label>
+        <br />
+        <input
+          className={style.input__picture}
+          id="picture"
+          type="file"
+          accept=".png, .jpeg"
+          {...register('picture')}
+        />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.picture?.message}</p>
+        </div>
 
-      <label>Accept </label>
-      <input type="checkbox" {...register('terms')} />
-      <p className={style.error}>{errors.terms?.message}</p>
+        <label htmlFor="accept">Accept </label>
+        <input id="accept" type="checkbox" {...register('terms')} />
+        <div className={style.place__error}>
+          <p className={style.error}>{errors.terms?.message}</p>
+        </div>
 
-      <button type="submit">SUBMIT</button>
-    </form>
+        <button className={style.btn__submit} type="submit">
+          SUBMIT
+        </button>
+      </form>
+    </div>
   );
 }
 

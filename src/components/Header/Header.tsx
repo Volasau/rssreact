@@ -10,10 +10,10 @@ function Header() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/formun">FormUn</Link>
+            <Link to="/formun">Uncontrolled</Link>
           </li>
           <li>
-            <Link to="/formhook">FormHook</Link>
+            <Link to="/formhook">Controlled</Link>
           </li>
         </ul>
       </nav>

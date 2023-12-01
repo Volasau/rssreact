@@ -7,9 +7,9 @@ function FormHook() {
     <>
       <div className={style.container}>
         <div className={style.title}>
-          <h3 className={style.text}>FormHook</h3>
+          <h3 className={style.text}>Controlled</h3>
         </div>
-        <div>
+        <div className={style.wrapper}>
           <InputHook />
         </div>
         <LinkToHome />
