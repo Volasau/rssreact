@@ -1,11 +1,23 @@
-.title {
+.container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  /* display: flex;
+  justify-content: center; */
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 30px;
-  color: brown;
+  color: rgb(38, 41, 225);
 }
 
 .text {
+  margin-bottom: 0;
   text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
 }

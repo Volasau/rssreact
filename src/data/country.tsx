@@ -5,7 +5,7 @@ export interface ICountry {
 
 export const countries: ICountry[] = [
   { Country: 'Afghanistan', code: 'AF' },
-  { Country: 'land Islands', code: 'AX' },
+  { Country: 'Aland Islands', code: 'AX' },
   { Country: 'Albania', code: 'AL' },
   { Country: 'Algeria', code: 'DZ' },
   { Country: 'American Samoa', code: 'AS' },

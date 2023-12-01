@@ -170,7 +170,7 @@ function InputHook() {
           className={style.input__picture}
           id="picture"
           type="file"
-          accept=".png, .jpeg"
+          accept=".png, .jpg"
           {...register('picture')}
         />
         <div className={style.place__error}>
