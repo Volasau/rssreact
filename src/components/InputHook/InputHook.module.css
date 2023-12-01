@@ -55,6 +55,7 @@ p {
 }
 
 .passwordStrength {
+  margin-bottom: 6px;
   text-align: left;
 }
 
@@ -63,13 +64,13 @@ p {
 }
 
 .weak {
-  color: rgb(181, 46, 89)
+  color: rgb(181, 46, 89);
 }
 
 .medium {
-  color: rgb(189, 150, 9)
+  color: rgb(189, 150, 9);
 }
 
 .strong {
-  color: green;
+  color: rgb(9, 173, 9);
 }

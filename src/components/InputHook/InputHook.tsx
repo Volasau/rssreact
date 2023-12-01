@@ -156,8 +156,11 @@ function InputHook() {
         </div>
 
         <div className={style.passwordStrength}>
-          <p className={style[getPasswordStrength(password)]}>
-            Strength: {getPasswordStrength(password)}
+          <p>
+            strength password:
+            <span className={style[getPasswordStrength(password)]}>
+              {getPasswordStrength(password)}
+            </span>
           </p>
         </div>
 
