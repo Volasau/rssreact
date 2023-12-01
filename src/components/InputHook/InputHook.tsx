@@ -38,13 +38,13 @@ const schema = yup
       .mixed()
       .test(
         'fileType',
-        'File not selected or not in PNG JPG format',
+        'File not selected or not in PNG JPEG format',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (files: any) => {
           if (!files || !files.length) return false;
 
           const file = files[0];
-          const allowedExtensions = ['png', 'jpg'];
+          const allowedExtensions = ['png', 'jpeg'];
           const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
           return fileExtension && allowedExtensions.includes(fileExtension);
