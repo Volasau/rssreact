@@ -53,3 +53,23 @@ p {
 .btn__submit:hover {
   background-color: rgb(52, 188, 3);
 }
+
+.passwordStrength {
+  text-align: left;
+}
+
+.very_weak {
+  color: red;
+}
+
+.weak {
+  color: rgb(181, 46, 89)
+}
+
+.medium {
+  color: rgb(189, 150, 9)
+}
+
+.strong {
+  color: green;
+}

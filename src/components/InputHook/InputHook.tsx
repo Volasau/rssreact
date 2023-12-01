@@ -69,6 +69,7 @@ function InputHook() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     mode: 'all',
@@ -76,6 +77,33 @@ function InputHook() {
   const onSubmit = (data: FormData) => {
     console.log(data);
     navigate('/');
+  };
+
+  const password = watch('password', '');
+  const getPasswordStrength = (password: string) => {
+    const hasNumber = /\d/.test(password);
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+]/.test(password);
+
+    const requirementsMetCount = [
+      hasNumber,
+      hasUppercase,
+      hasLowercase,
+      hasSpecialChar,
+    ].filter(Boolean).length;
+
+    if (requirementsMetCount === 1) {
+      return 'very_weak';
+    } else if (requirementsMetCount === 2) {
+      return 'weak';
+    } else if (requirementsMetCount === 3) {
+      return 'medium';
+    } else if (requirementsMetCount === 4) {
+      return 'strong';
+    } else {
+      return '';
+    }
   };
 
   return (
@@ -125,6 +153,12 @@ function InputHook() {
         />
         <div className={style.place__error}>
           <p className={style.error}>{errors.password?.message}</p>
+        </div>
+
+        <div className={style.passwordStrength}>
+          <p className={style[getPasswordStrength(password)]}>
+            Strength: {getPasswordStrength(password)}
+          </p>
         </div>
 
         <label htmlFor="conpass">Confirm Password</label>
