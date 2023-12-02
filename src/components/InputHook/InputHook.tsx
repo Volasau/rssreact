@@ -194,16 +194,20 @@ function InputHook() {
 
         <label htmlFor="country">Country</label>
         <br />
-        <select id="country" {...register('country')}>
-          <option value="">Select Country</option>
+        <input
+          className={style.input__fild}
+          list="country-list"
+          id="country"
+          name="country"
+          placeholder="Select Country"
+        />
+        <datalist id="country-list">
           {countries.map((country, index) => (
-            <option key={index} value={country}>
-              {country}
-            </option>
+            <option key={index} value={country} />
           ))}
-        </select>
+        </datalist>
         <div className={style.place__error}>
-          <p className={style.error}>{errors.country?.message}</p>
+          <p className={style.error}>{}</p>
         </div>
 
         <label htmlFor="picture">Upload Picture</label>
