@@ -55,7 +55,7 @@ const schema = yup
         if (!files || !files.length) return true;
 
         const file = files[0];
-        const maxSizeInBytes = 5 * 1024 * 1024;
+        const maxSizeInBytes = 1 * 1024 * 1024;
         return file.size <= maxSizeInBytes;
       })
       .required('Picture is required'),
