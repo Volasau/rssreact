@@ -68,7 +68,7 @@ function InputHook() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -220,7 +220,7 @@ function InputHook() {
           <p className={style.error}>{errors.terms?.message}</p>
         </div>
 
-        <button className={style.btn__submit} type="submit">
+        <button className={style.btn__submit} type="submit" disabled={!isValid}>
           SUBMIT
         </button>
       </form>
