@@ -2,10 +2,13 @@ import React, { useRef } from 'react';
 import style from './InputUn.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addForm } from '../../redux/formSlice';
 
 function InputUn() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [
     nameRef,
@@ -29,6 +32,8 @@ function InputUn() {
     useRef<HTMLInputElement | null>(null),
   ];
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const formData = {
       firstName: nameRef.current?.value || '',
       age: parseInt(ageRef.current?.value || '0', 10),
@@ -41,9 +46,22 @@ function InputUn() {
       terms: acceptRef.current?.checked || false,
     };
 
+    const { firstName, age, email, password, gender, /*picture,*/ country } =
+      formData;
+
     console.log(formData);
-    // navigate('/');
-    event.preventDefault();
+    dispatch(
+      addForm({
+        firstName,
+        age,
+        email,
+        password,
+        gender,
+        // picture: image64,
+        country,
+      })
+    );
+    navigate('/');
   };
 
   const countries = useSelector(

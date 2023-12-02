@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.active {
+  border: 6px solid rgb(255, 0, 0);
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.unactive {
+  border: 2px solid blue;
+  border-radius: 4px;
+  margin: 10px;
+}

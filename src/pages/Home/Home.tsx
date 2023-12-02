@@ -1,4 +1,5 @@
 import Header from '../../components/Header/Header';
+import InfoList from '../../components/InfoList/InfoList';
 import style from './Home.module.css';
 
 function Home() {
@@ -11,6 +12,7 @@ function Home() {
         <div className={style.title}>
           <h3 className={style.text}>Forms HOME</h3>
         </div>
+        <InfoList />
       </div>
     </>
   );
