@@ -3,8 +3,9 @@ import style from './InputHook.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { countries } from '../../data/country';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const schema = yup
   .object({
@@ -78,6 +79,10 @@ function InputHook() {
     console.log(data);
     navigate('/');
   };
+
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   const password = watch('password', '');
   const getPasswordStrength = (password: string) => {
@@ -192,8 +197,8 @@ function InputHook() {
         <select id="country" {...register('country')}>
           <option value="">Select Country</option>
           {countries.map((country, index) => (
-            <option key={index} value={country.Country}>
-              {country.Country}
+            <option key={index} value={country}>
+              {country}
             </option>
           ))}
         </select>

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import style from './InputUn.module.css';
-import { countries } from '../../data/country';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 // import { useNavigate } from 'react-router-dom';
 
 function InputUn() {
@@ -44,6 +45,10 @@ function InputUn() {
     // navigate('/');
     event.preventDefault();
   };
+
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   return (
     <>
@@ -127,7 +132,7 @@ function InputUn() {
           />
           <datalist id="country-list">
             {countries.map((country, index) => (
-              <option key={index} value={country.Country} />
+              <option key={index} value={country} />
             ))}
           </datalist>
           <div className={style.place__error}>
