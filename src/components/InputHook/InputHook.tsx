@@ -1,68 +1,10 @@
-import React from 'react';
 import style from './InputHook.module.css';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-
-const schema = yup
-  .object({
-    firstName: yup
-      .string()
-      .required('Name is required')
-      .matches(/^[A-Z]/, 'Should start with a capital letter'),
-    age: yup.number().positive().integer().required('Age is required'),
-    email: yup
-      .string()
-      .email('Invalid email format')
-      .matches(/^.+@.+\..+$/, 'Invalid email format')
-      .required('Email is required'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .matches(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])/,
-        'must contain min 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character'
-      ),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password')], 'Passwords must match')
-      .required('Confirm Password is required'),
-    terms: yup
-      .boolean()
-      .oneOf([true], 'Accept terms and conditions is required'),
-    country: yup.string().required('Country is required'),
-    gender: yup.string().required('Gender is required '),
-    picture: yup
-      .mixed()
-      .test(
-        'fileType',
-        'File not selected or not in PNG JPEG format',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (files: any) => {
-          if (!files || !files.length) return false;
-
-          const file = files[0];
-          const allowedExtensions = ['png', 'jpeg'];
-          const fileExtension = file.name.split('.').pop()?.toLowerCase();
-
-          return fileExtension && allowedExtensions.includes(fileExtension);
-        }
-      )
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .test('fileSize', 'File size exceeds 5MB limit', (files: any) => {
-        if (!files || !files.length) return true;
-
-        const file = files[0];
-        const maxSizeInBytes = 1 * 1024 * 1024;
-        return file.size <= maxSizeInBytes;
-      })
-      .required('Picture is required'),
-  })
-  .required();
-type FormData = yup.InferType<typeof schema>;
+import { schema, FormData } from '../../yup/yup';
 
 function InputHook() {
   const navigate = useNavigate();
@@ -80,9 +22,7 @@ function InputHook() {
     navigate('/');
   };
 
-  const countries = useSelector(
-    (state: RootState) => state.countries.countries
-  );
+  const counries = useSelector((state: RootState) => state.countries.countries);
 
   const password = watch('password', '');
   const getPasswordStrength = (password: string) => {
@@ -198,16 +138,16 @@ function InputHook() {
           className={style.input__fild}
           list="country-list"
           id="country"
-          name="country"
           placeholder="Select Country"
+          {...register('country')}
         />
         <datalist id="country-list">
-          {countries.map((country, index) => (
+          {counries.map((country, index) => (
             <option key={index} value={country} />
           ))}
         </datalist>
         <div className={style.place__error}>
-          <p className={style.error}>{}</p>
+          <p className={style.error}>{errors.country?.message}</p>
         </div>
 
         <label htmlFor="picture">Upload Picture</label>
