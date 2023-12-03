@@ -1,0 +1,80 @@
+.error {
+  font-size: 80%;
+  color: red;
+}
+
+.place__error {
+  height: 33px;
+}
+
+.container {
+  text-align: center;
+}
+
+.form__hook {
+  width: 450px;
+  border: 2px solid blue;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+label {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 600;
+}
+
+.input__fild,
+select {
+  width: 350px;
+  height: 25px;
+}
+
+p {
+  margin: 0;
+}
+
+.input__picture {
+  width: 350px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.btn__submit {
+  width: 350px;
+  height: 30px;
+  letter-spacing: 2px;
+  border-radius: 6px;
+  background-color: rgb(38, 59, 251);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn__submit:hover {
+  background-color: rgb(52, 188, 3);
+}
+
+.passwordStrength {
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.very_weak {
+  color: red;
+}
+
+.weak {
+  color: rgb(181, 46, 89);
+}
+
+.medium {
+  color: rgb(189, 150, 9);
+}
+
+.strong {
+  color: rgb(9, 173, 9);
+}
+
+.btn__submit:disabled {
+  pointer-events: none;
+}

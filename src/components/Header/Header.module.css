@@ -1,0 +1,24 @@
+.container {
+  margin-top: 15px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-evenly;
+  height: 30px;
+  align-items: center;
+}
+
+.title {
+  font-size: 25px;
+  letter-spacing: 1.5px;
+  background-color: rgb(38, 59, 251);
+  color: white;
+  border-radius: 8px;
+  padding: 5px;
+  transition: 0.5s;
+}
+
+.title:hover {
+  background-color: rgb(52, 188, 3);
+}
