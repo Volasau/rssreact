@@ -12,6 +12,8 @@ const UncontrolledForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
+  const [validationErrors, setValidationErrors] =
+    useState<yup.ValidationError[]>();
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
@@ -39,9 +41,6 @@ const UncontrolledForm = () => {
     useRef<HTMLInputElement | null>(null),
     useRef<HTMLInputElement | null>(null),
   ];
-
-  const [validationErrors, setValidationErrors] =
-    useState<yup.ValidationError[]>();
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event?.preventDefault();
