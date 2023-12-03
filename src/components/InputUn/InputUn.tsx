@@ -11,6 +11,12 @@ import { schemaUn } from '../../yup/yup';
 const UncontrolledForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+  };
 
   const [
     nameRef,
@@ -77,6 +83,32 @@ const UncontrolledForm = () => {
       } else {
         console.error('Other error:', error);
       }
+    }
+  };
+
+  const getPasswordStrength = (password: string) => {
+    const hasNumber = /\d/.test(password);
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*()_+]/.test(password);
+
+    const requirementsMetCount = [
+      hasNumber,
+      hasUppercase,
+      hasLowercase,
+      hasSpecialChar,
+    ].filter(Boolean).length;
+
+    if (requirementsMetCount === 1) {
+      return 'very_weak';
+    } else if (requirementsMetCount === 2) {
+      return 'weak';
+    } else if (requirementsMetCount === 3) {
+      return 'medium';
+    } else if (requirementsMetCount === 4) {
+      return 'strong';
+    } else {
+      return '';
     }
   };
 
@@ -155,6 +187,7 @@ const UncontrolledForm = () => {
             id="password"
             name="password"
             ref={pasRef}
+            onChange={handlePasswordChange}
           />
           <div className={style.place__error}>
             {validationErrors?.map((validationError, index) =>
@@ -165,6 +198,15 @@ const UncontrolledForm = () => {
                 >{`${validationError.message}`}</p>
               ) : null
             )}
+          </div>
+
+          <div className={style.passwordStrength}>
+            <p>
+              strength password:
+              <span className={style[getPasswordStrength(password)]}>
+                {getPasswordStrength(password)}
+              </span>
+            </p>
           </div>
 
           <label htmlFor="confirm-password">Confirm Password</label>
