@@ -5,7 +5,9 @@ function LinkToHome() {
   return (
     <>
       <div className={style.container}>
-        <Link to="/">Home</Link>
+        <Link className={style.title} to="/">
+          Home
+        </Link>
       </div>
     </>
   );

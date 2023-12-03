@@ -10,7 +10,7 @@ function Home() {
           <Header />
         </div>
         <div className={style.title}>
-          <h3 className={style.text}>Forms HOME</h3>
+          <h3 className={style.text}>HOME</h3>
         </div>
         <InfoList />
       </div>

@@ -6,13 +6,13 @@ function FormHook() {
   return (
     <>
       <div className={style.container}>
+        <LinkToHome />
         <div className={style.title}>
           <h3 className={style.text}>Controlled</h3>
         </div>
         <div className={style.wrapper}>
           <InputHook />
         </div>
-        <LinkToHome />
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import { RootState } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addForm } from '../../redux/formSlice';
+import { changeCoding } from '../../function/functions';
 
 function InputUn() {
   const navigate = useNavigate();
@@ -31,34 +32,24 @@ function InputUn() {
     useRef<HTMLInputElement | null>(null),
     useRef<HTMLInputElement | null>(null),
   ];
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = {
-      firstName: nameRef.current?.value || '',
-      age: parseInt(ageRef.current?.value || '0', 10),
-      email: emailRef.current?.value || '',
-      password: pasRef.current?.value || '',
-      confirmPassword: conpasRef.current?.value || '',
-      gender: genderRef.current?.value || '',
-      country: countryRef.current?.value || '',
-      picture: pictureRef.current?.files ? [{}] : {},
-      terms: acceptRef.current?.checked || false,
-    };
+    const image64 =
+      pictureRef.current && pictureRef.current.files
+        ? await changeCoding(pictureRef.current.files[0])
+        : '';
 
-    const { firstName, age, email, password, gender, /*picture,*/ country } =
-      formData;
-
-    console.log(formData);
     dispatch(
       addForm({
-        firstName,
-        age,
-        email,
-        password,
-        gender,
-        // picture: image64,
-        country,
+        firstName: nameRef.current?.value || '',
+        age: parseInt(ageRef.current?.value || '0', 10),
+        email: emailRef.current?.value || '',
+        password: pasRef.current?.value || '',
+        confirmPassword: conpasRef.current?.value || '',
+        gender: genderRef.current?.value || '',
+        country: countryRef.current?.value || '',
+        picture: image64,
       })
     );
     navigate('/');

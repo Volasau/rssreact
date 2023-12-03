@@ -4,9 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { schema, FormData } from '../../yup/yup';
+import { schema, FormDatas } from '../../yup/yup';
 import { useDispatch } from 'react-redux';
 import { addForm } from '../../redux/formSlice';
+import { Inputes } from '../../type/types';
+import { changeCoding } from '../../function/functions';
 
 function InputHook() {
   const navigate = useNavigate();
@@ -17,15 +19,14 @@ function InputHook() {
     handleSubmit,
     formState: { errors, isValid },
     watch,
-  } = useForm<FormData>({
+  } = useForm<FormDatas>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-  const onSubmit = async (data: FormData) => {
-    const { firstName, age, email, password, gender, /*picture,*/ country } =
-      data;
+  const onSubmit = async (data: Inputes) => {
+    const { firstName, age, email, password, gender, picture, country } = data;
+    const image64 = picture ? await changeCoding(picture[0]) : '';
 
-    console.log(data);
     dispatch(
       addForm({
         firstName,
@@ -33,7 +34,7 @@ function InputHook() {
         email,
         password,
         gender,
-        // picture: image64,
+        picture: image64,
         country,
       })
     );

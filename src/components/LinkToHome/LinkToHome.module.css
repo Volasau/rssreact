@@ -1,3 +1,17 @@
 .container {
   text-align: center;
 }
+
+.title {
+  font-size: 25px;
+  letter-spacing: 1.5px;
+  background-color: rgb(38, 59, 251);
+  color: white;
+  border-radius: 8px;
+  padding: 5px;
+  transition: 0.5s;
+}
+
+.title:hover {
+  background-color: rgb(52, 188, 3);
+}

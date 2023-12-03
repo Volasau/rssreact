@@ -6,13 +6,13 @@ function FormUN() {
   return (
     <>
       <div className={style.container}>
+        <LinkToHome />
         <div className={style.title}>
           <h3 className={style.text}>Uncontrolled</h3>
         </div>
         <div className={style.wrapper}>
           <InputUn />
         </div>
-        <LinkToHome />
       </div>
     </>
   );

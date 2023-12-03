@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { initialState } from '../data/country';
 
 export const schema = yup
   .object({
@@ -26,27 +27,35 @@ export const schema = yup
     terms: yup
       .boolean()
       .oneOf([true], 'Accept terms and conditions is required'),
-    country: yup.string().required('Country is required'),
+    country: yup
+      .string()
+      .test('isValidCountry', 'Invalid country', function (value) {
+        const countryNames = Object.values(initialState.countries);
+        if (typeof value === 'string') {
+          return countryNames.includes(value);
+        }
+
+        return false;
+      })
+      .required('Country is required'),
     gender: yup.string().required('Gender is required '),
     picture: yup
-      .mixed()
+      .mixed<FileList>()
       .test(
         'fileType',
         'File not selected or not in PNG JPEG format',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (files: any) => {
+        (files) => {
           if (!files || !files.length) return false;
 
           const file = files[0];
           const allowedExtensions = ['png', 'jpeg'];
           const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
-          return fileExtension && allowedExtensions.includes(fileExtension);
+          return !!(fileExtension && allowedExtensions.includes(fileExtension));
         }
       )
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .test('fileSize', 'File size exceeds 1MB limit', (files: any) => {
-        if (!files || !files.length) return true;
+      .test('fileSize', 'File size exceeds 1MB limit', (files) => {
+        if (!files || !files.length) return false;
 
         const file = files[0];
         const maxSizeInBytes = 1 * 1024 * 1024;
@@ -56,4 +65,4 @@ export const schema = yup
   })
   .required();
 
-export type FormData = yup.InferType<typeof schema>;
+export type FormDatas = yup.InferType<typeof schema>;

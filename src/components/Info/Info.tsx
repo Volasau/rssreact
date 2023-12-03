@@ -1,6 +1,5 @@
 import { InfoData } from '../../type/types';
 import style from './Info.module.css';
-import Img from '../../../public/favicon.ico';
 
 export function Info(props: InfoData & { className: string }) {
   const { data, className } = props;
@@ -14,11 +13,7 @@ export function Info(props: InfoData & { className: string }) {
           <p>Password: {data.password}</p>
           <p>Gender: {data.gender}</p>
           <p>Country: {data.country}</p>
-          <img
-            src={Img}
-            /*src={data.picture}*/ className={style.picture}
-            alt="image"
-          />
+          <img src={data.picture} className={style.picture} alt="image" />
         </div>
       </div>
     </>
